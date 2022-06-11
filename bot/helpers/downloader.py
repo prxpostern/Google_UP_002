@@ -1,4 +1,4 @@
-import os, wget, glob, functools, logging
+import os, wget, glob, functools, logging, asyncio
 from concurrent.futures import ThreadPoolExecutor
 from pySmartDL import SmartDL
 from urllib.error import HTTPError
