@@ -47,45 +47,8 @@ async def _download(client, message):
       await yt_uploader(client, message, file_path, ytcheck)
       
     else:
-      if '|' in link:
-        link, filename = link.split('|')
-        link = link.strip()
-        filename = filename.strip()
-        dl_path = os.path.join(f'{DOWNLOAD_DIRECTORY}{filename}')
-      else:
-        link = link.strip()
-        filename = os.path.basename(link)
-        dl_path = os.path.join(DOWNLOAD_DIRECTORY, os.path.basename(link))
-
-      await sent_message.edit(Messages.DOWNLOADING.format(link))
+      await sent_message.edit(f"Direct link Detected. Send /upload reply to your url.")
       
-      result, file_path = await download_file2(link, dl_path)
-      if result == True:
-        fn = os.path.basename(file_path)
-        sz = humanbytes(os.path.getsize(file_path))
-        await sent_message.edit(f"`uploading 1st ...`\n\n{fn} [{sz}]")
-      else:
-        await sent_message.edit(Messages.DOWNLOAD_ERROR.format(file_path, link))
-        await asyncio.sleep(3)
-        sw = "bbb"
-
-      if sw == "bbb":
-        await sent_message.edit(f"Trying to Download with Second Method !\n\n`{link}`")
-        start = time.time()
-        try:
-          file_path = await download_file(link, dl_path, sent_message, start, client)
-          fn = os.path.basename(file_path)
-          sz = humanbytes(os.path.getsize(file_path))
-          await sent_message.edit(f"`uploading 1st ...`\n\n{fn} [{sz}]")
-        except Exception as e:
-          print(e)
-          LOGGER.info(f'Error:{e}')
-          await sent_message.edit(f"Second Method Failed :\n\n{e}")
-          try:
-            os.remove(file_path)
-          except:
-            pass
-          return
       
       LOGGER.info(file_path)
       await sent_message.delete()
@@ -123,7 +86,7 @@ async def _telegram_file(client, message):
   ytcheck = False
   await yt_uploader(client, message, file_path, ytcheck)
   
-@Client.on_message(filters.incoming & filters.private & filters.command(["bbb"]) & CustomFilters.auth_users)
+@Client.on_message(filters.incoming & filters.private & filters.command(["upload"]) & CustomFilters.auth_users)
 async def _ru2(client, u):
   if not u.reply_to_message:
     await u.reply_text(text=f"Reply To Your Direct Link !", quote=True)
