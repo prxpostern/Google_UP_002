@@ -47,7 +47,8 @@ async def _download(client, message):
       await yt_uploader(client, message, file_path, ytcheck)
       
     else:
-      await message.reply_text(f"Direct link Detected. Send /upload reply to your url." , quote=True)
+      await sent_message.edit(f"Direct link Detected. Send /upload reply to your url.")
+      #await message.reply_text(f"Direct link Detected. Send /upload reply to your url." , quote=True)
              
 @Client.on_message(filters.private & filters.incoming & (filters.document | filters.audio | filters.video | filters.photo) & CustomFilters.auth_users)
 async def _telegram_file(client, message):
