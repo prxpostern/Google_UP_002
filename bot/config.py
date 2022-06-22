@@ -18,7 +18,7 @@ class config:
 
 
 class BotCommands:
-  Download = ['upload', 'dl']
+  Download = ['download', 'dl']
   Authorize = ['auth', 'authorize']
   SetFolder = ['setfolder', 'setfl']
   Revoke = ['revoke']
